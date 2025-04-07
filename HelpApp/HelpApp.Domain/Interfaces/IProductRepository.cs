@@ -1,6 +1,4 @@
 ﻿using HelpApp.Domain.Entities;
-
-
 namespace HelpApp.Domain.Interfaces
 {
     public interface IProductRepository
