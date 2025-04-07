@@ -91,29 +91,32 @@ namespace HelpApp.Domain.Test
 
 
 
-        [Fact(DisplayName = "Create Product With Price Negative")]
-        public void CreateProduct_WithPriceNegative_ResultObjectException()
+        [Theory(DisplayName = "Create Product With Price Negative")]
+        [InlineData(-1)]
+        public void CreateProduct_WithPriceNegative_ResultObjectException(int invalid)
         {
-            Action action = () => new Product(1, "Product Name", "abcde", -1, 1, "");
+            Action action = () => new Product(1, "Product Name", "abcde", invalid, 1, "");
             action.Should()
                 .Throw<HelpApp.Domain.Validation.DomainExceptionValidation>()
                 .WithMessage("Invalid price negative value.");
         }
 
 
-        [Fact(DisplayName = "Create Product With Stock Negative Stock")]
-        public void CreateProduct_WithStockNegative_ResultObjectException()
+        [Theory(DisplayName = "Create Product With Stock Negative Stock")]
+        [InlineData(-31)]
+        public void CreateProduct_WithStockNegative_ResultObjectException(int invalid)
         {
-            Action action = () => new Product(1, "Product Name", "abcde", 100, -1, "");
+            Action action = () => new Product(1, "Product Name", "abcde", 100, invalid, "");
             action.Should()
                 .Throw<HelpApp.Domain.Validation.DomainExceptionValidation>()
                 .WithMessage("Invalid stock negative value.");
         }
         
-        [Fact(DisplayName = "Create Product With Image Too Long")]
-        public void CreateProduct_WithImageTooLong_ResultObjectException()
+        [Theory(DisplayName = "Create Product With URL Image Too Long")]
+        [InlineData("https://www.example.com/bsbdfsdhfsybdjhfgyuihgsnlljajosnjagomnuhvrhnuvgyygcygudhauiqiasasdfghjklpoiuytrewqzxcvbnmlkjhgfdsaqweruiopplkjhgfdszxcvbnmlkjhgfdsaqwertyuioplkjhgfdsazxcvbnmmlkjhgfdsaqwertyuioplkjhgfdsazxcvbnmqwertyuiopasdfghjklzxcvbnm,qwertyuiopasdfghjklzxcvbnmetew")]
+        public void CreateProduct_WithImageTooLong_ResultObjectException(string url )
         {
-            Action action = () => new Product(1, "Product Name", "abcde", 100, 1, "bsbdfsdhfsybdjhfgyuihgsnlljajosnjagomnuhvrhnuvgyygcygudhauiqiasasdfghjklçpoiuytrewqzxcvbnmlkjhgfdsaqweruiopplkjhgfdszxcvbnmlkjhgfdsaqwertyuioplkjhgfdsazxcvbnmmlkjhgfdsaqwertyuioplkjhgfdsazxcvbnmqwertyuiopasdfghjklzxcvbnm,qwertyuiopasdfghjklzxcvbnmetew"
+            Action action = () => new Product(1, "Product Name", "abcde", 100, 1, url
                 ); action.Should().Throw<HelpApp.Domain.Validation.DomainExceptionValidation>()
                 .WithMessage("Invalid image name, too long, maximum 250 characters.");
         }
