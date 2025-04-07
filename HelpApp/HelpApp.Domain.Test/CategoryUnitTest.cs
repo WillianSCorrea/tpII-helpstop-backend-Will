@@ -67,7 +67,7 @@ namespace HelpApp.Domain.Test
 
 
         #endregion
-    }
+    
 
     
         #region Testes Positivos
