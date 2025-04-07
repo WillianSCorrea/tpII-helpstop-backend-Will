@@ -1,4 +1,5 @@
-﻿using HelpApp.Domain.Entity;
+﻿using HelpApp.Domain.Entities;
+
 
 namespace HelpApp.Domain.Interfaces
 {
