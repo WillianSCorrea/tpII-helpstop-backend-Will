@@ -91,20 +91,22 @@ namespace HelpApp.Domain.Test
 
 
 
-        [Fact(DisplayName = "Create Product With Price Negative")]
-        public void CreateProduct_WithPriceNegative_ResultObjectException()
+        [Theory(DisplayName = "Create Product With Price Negative")]
+        [InlineData(-1)]
+        public void CreateProduct_WithPriceNegative_ResultObjectException(int invalid)
         {
-            Action action = () => new Product(1, "Product Name", "abcde", -1, 1, "");
+            Action action = () => new Product(1, "Product Name", "abcde", invalid, 1, "");
             action.Should()
                 .Throw<HelpApp.Domain.Validation.DomainExceptionValidation>()
                 .WithMessage("Invalid price negative value.");
         }
 
 
-        [Fact(DisplayName = "Create Product With Stock Negative Stock")]
-        public void CreateProduct_WithStockNegative_ResultObjectException()
+        [Theory(DisplayName = "Create Product With Stock Negative Stock")]
+        [InlineData(-31)]
+        public void CreateProduct_WithStockNegative_ResultObjectException(int invalid)
         {
-            Action action = () => new Product(1, "Product Name", "abcde", 100, -1, "");
+            Action action = () => new Product(1, "Product Name", "abcde", 100, invalid, "");
             action.Should()
                 .Throw<HelpApp.Domain.Validation.DomainExceptionValidation>()
                 .WithMessage("Invalid stock negative value.");
