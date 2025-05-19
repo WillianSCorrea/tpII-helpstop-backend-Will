@@ -2,7 +2,7 @@
 using HelpApp.Application.DTOs;
 using HelpApp.Application.Interfaces;
 using HelpApp.Domain.Interfaces;
-
+using HelpApp.Domain.Entities;
 namespace HelpApp.Application.Services
 {
     public class CategoryServices : ICategoryService
@@ -15,29 +15,35 @@ namespace HelpApp.Application.Services
             _mapper = mapper;
         }
 
-        public Task<IEnumerable<CategoryDTO>> GetCategories()
+        public async Task<IEnumerable<CategoryDTO>> GetCategories()
         {
-            throw new NotImplementedException();
+            var categoriesEntity = await _categoryRepository.GetCategories();
+            return _mapper.Map<IEnumerable<CategoryDTO>>(categoriesEntity);
         }
 
-        public Task<CategoryDTO> GetById(int? id)
+        public async Task<CategoryDTO> GetById(int? id)
         {
-            throw new NotImplementedException();
+             var categoryEntity = await _categoryRepository.GetById(id);
+            return _mapper.Map<CategoryDTO>(categoryEntity);    
+            
         }
 
-        public Task Add(CategoryDTO categoryDto)
+        public async Task Add(CategoryDTO categoryDto)
         {
-            throw new NotImplementedException();
+            var categoryEntity = _mapper.Map<Category>(categoryDto);
+            await _categoryRepository.Create(categoryEntity);
         }
 
-        public Task Update(CategoryDTO categoryDto)
+        public async Task Update(CategoryDTO categoryDto)
         {
-            throw new NotImplementedException();
+            var categoryEntity = _mapper.Map<Category>(categoryDto);
+            await _categoryRepository.Update(categoryEntity);
         }
 
-        public Task Remove(int? id)
+        public async Task Remove(int? id)
         {
-            throw new NotImplementedException();
+            var categoryEntity = _categoryRepository.GetById(id).Result;
+            await _categoryRepository.Remove(categoryEntity);
         }
     }
 }
